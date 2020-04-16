@@ -108,9 +108,9 @@ echo ":::"
     sysctl -p
 
     if [[ $NO_UFW -eq 0 ]]; then
-        $SUDO sed -z "s/*nat\n:POSTROUTING ACCEPT \[0:0\]\n-I POSTROUTING -s 10.8.0.0\/24 -o $IPv4dev -j MASQUERADE\nCOMMIT\n\n//" -i /etc/ufw/before.rules
+        $SUDO sed -z "s/*nat\n:POSTROUTING ACCEPT \[0:0\]\n-I POSTROUTING -s 10.43.8.0\/24 -o $IPv4dev -j MASQUERADE\nCOMMIT\n\n//" -i /etc/ufw/before.rules
         $SUDO ufw delete allow "$PORT"/"$PROTO" >/dev/null
-        $SUDO ufw route delete allow in on tun0 from 10.8.0.0/24 out on "$IPv4dev" to any >/dev/null
+        $SUDO ufw route delete allow in on tun0 from 10.43.8.0/24 out on "$IPv4dev" to any >/dev/null
         $SUDO ufw reload >/dev/null
     fi
 
