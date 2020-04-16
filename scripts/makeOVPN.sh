@@ -18,7 +18,7 @@ helpFunc() {
     echo "::: Commands:"
     echo ":::  [none]               Interactive mode"
     echo ":::  nopass               Create a client without a password"
-    echo ":::  -d,--days            Expire the certificate after specified number of days (default: 1080)"
+    echo ":::  -d,--days            Expire the certificate after specified number of days (default: 3650)"
     echo ":::  -n,--name            Name for the Client (default: '"$(hostname)"')"
     echo ":::  -p,--password        Password for the Client (no default)"
     echo ":::  -h,--help            Show this help dialog"
@@ -182,12 +182,12 @@ if [ "${NAME}" == "ta" ] || [ "${NAME}" == "server" ] || [ "${NAME}" == "ca" ]; 
     exit 1
 fi
 
-#As of EasyRSA 3.0.6, by default certificates last 1080 days, see https://github.com/OpenVPN/easy-rsa/blob/6b7b6bf1f0d3c9362b5618ad18c66677351cacd1/easyrsa3/vars.example
+#As of EasyRSA 3.0.6, by default certificates last 3650 days, see https://github.com/OpenVPN/easy-rsa/blob/6b7b6bf1f0d3c9362b5618ad18c66677351cacd1/easyrsa3/vars.example
 if [ -z "${DAYS}" ]; then
-    read -r -e -p "How many days should the certificate last?  " -i 1080 DAYS
+    read -r -e -p "How many days should the certificate last?  " -i 3650 DAYS
 fi
 
-if [[ ! "$DAYS" =~ ^[0-9]+$ ]] || [ "$DAYS" -lt 1 ] || [ "$DAYS" -gt 3650 ]; then
+if [[ ! "$DAYS" =~ ^[0-9]+$ ]] || [ "$DAYS" -lt 1 ] || [ "$DAYS" -gt 365000 ]; then
     #The CRL lasts 3650 days so it doesn't make much sense that certificates would last longer
     echo "Please input a valid number of days, between 1 and 3650 inclusive."
     exit 1
