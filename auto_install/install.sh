@@ -960,11 +960,11 @@ confNetwork() {
         else
             echo "::: Detected UFW is enabled."
             echo "::: Adding UFW rules..."
-            $SUDO sed "/delete these required/i *nat\n:POSTROUTING ACCEPT [0:0]\n-I POSTROUTING -s 10.8.0.0/24 -o $IPv4dev -j MASQUERADE\nCOMMIT\n" -i /etc/ufw/before.rules
+            $SUDO sed "/delete these required/i *nat\n:POSTROUTING ACCEPT [0:0]\n-I POSTROUTING -s 10.43.8.0/24 -o $IPv4dev -j MASQUERADE\nCOMMIT\n" -i /etc/ufw/before.rules
             # Insert rules at the beginning of the chain (in case there are other rules that may drop the traffic)
             $SUDO ufw insert 1 allow "$PORT"/"$PROTO" >/dev/null
             # Don't forward everything, just the traffic originated from the VPN subnet
-            $SUDO ufw route insert 1 allow in on tun0 from 10.8.0.0/24 out on "$IPv4dev" to any >/dev/null
+            $SUDO ufw route insert 1 allow in on tun0 from 10.43.8.0/24 out on "$IPv4dev" to any >/dev/null
             $SUDO ufw reload >/dev/null
             echo "::: UFW configuration completed."
         fi
@@ -974,7 +974,7 @@ confNetwork() {
     # else configure iptables
     if [[ $noUFW -eq 1 ]]; then
         echo 1 > /tmp/noUFW
-        $SUDO iptables -t nat -I POSTROUTING -s 10.8.0.0/24 -o "$IPv4dev" -j MASQUERADE
+        $SUDO iptables -t nat -I POSTROUTING -s 10.43.8.0/24 -o "$IPv4dev" -j MASQUERADE
         case ${PLAT} in
             Ubuntu|Debian|Devuan)
                 $SUDO iptables-save | $SUDO tee /etc/iptables/rules.v4 > /dev/null
