@@ -7,7 +7,7 @@
 #
 # Install with this command (from your Pi):
 #
-# curl -L https://install.pivpn.io | bash
+# curl -L https://raw.githubusercontent.com/p-a-u-l-l-i/pivpn/master/auto_install/install.sh | bash
 # Make sure you have `curl` installed
 set -e
 
@@ -24,7 +24,7 @@ PKG_COUNT="${PKG_MANAGER} -s -o Debug::NoLocking=true upgrade | grep -c ^Inst ||
 PIVPN_DEPS=(openvpn git tar wget grep iptables-persistent dnsutils expect whiptail net-tools)
 ###          ###
 
-pivpnGitUrl="https://github.com/pivpn/pivpn.git"
+pivpnGitUrl="https://github.com/p-a-u-l-l-i/pivpn.git"
 pivpnFilesDir="/etc/.pivpn"
 easyrsaVer="3.0.6"
 easyrsaRel="https://github.com/OpenVPN/easy-rsa/releases/download/v${easyrsaVer}/EasyRSA-unix-v${easyrsaVer}.tgz"
@@ -222,7 +222,7 @@ verifyFreeDiskSpace() {
         echo "::: You only have ${existing_free_kilobytes} KiloBytes free."
         echo "::: If this is a new install on a Raspberry Pi you may need to expand your disk."
         echo "::: Try running 'sudo raspi-config', and choose the 'expand file system option'"
-        echo "::: After rebooting, run this installation again. (curl -L https://install.pivpn.io | bash)"
+        echo "::: After rebooting, run this installation again. (curl -L https://raw.githubusercontent.com/p-a-u-l-l-i/pivpn/master/auto_install/install.sh | bash)"
 
         echo "Insufficient free space, exiting..."
         exit 1
